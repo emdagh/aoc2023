@@ -29,7 +29,8 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-I", "${workspaceFolder}/common"
             ],
             "options": {
                 "cwd": "${fileDirname}"

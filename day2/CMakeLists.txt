@@ -1,3 +1,6 @@
 project(day2)
-file(SRC main.cpp)
+file(GLOB SRC main.cpp)
 add_executable(${PROJECT_NAME} ${SRC})
+target_include_directories(${PROJECT_NAME} PUBLIC 
+    "${CMAKE_SOURCE_DIR}/common"
+    )

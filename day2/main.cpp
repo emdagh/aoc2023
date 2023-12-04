@@ -1,32 +1,31 @@
+#include "string.hpp"
 #include <fstream>
+#include <iostream>
 #include <regex>
 #include <unordered_map>
-#include <iostream>
 
 std::unordered_map<std::string, int> game = {
-    //12 red cubes, 13 green cubes, and 14 blue cubes.
-    { "red", 12 },
-    { "green", 13 },
-    { "blue", 14 }
-};
+    // 12 red cubes, 13 green cubes, and 14 blue cubes.
+    {"red", 12},
+    {"green", 13},
+    {"blue", 14}};
 
+int main(int, char **) {
+  std::ifstream ifs("./input.txt");
+  std::string line;
 
-int main(int, char**) {
-    std::ifstream ifs("./input.txt");
-    std::string line;
+  while (std::getline(ifs, line)) {
 
-    auto re_red     = std::regex("(\\d+)\\s+red");
-    auto re_green   = std::regex("(\\d+)\\s+green");
-    auto re_blue    = std::regex("(\\d+)\\s+blue");
+    auto game = split(line, ":");
+    auto turns = split(game[1], ";");
+    for (auto turn : turns) {
+      auto actions = split(turn, ",");
+      for (auto action : actions) {
+        auto kv = split(ltrim(action), " ");
 
-    while(std::getline(ifs, line)) {
-        std::smatch sm;
-        std::regex_search(line, sm, re_red);
-        for(auto it: sm) {
-            std::cout << it.str() << std::endl;
-        }
-
-        
+        std::cout << "key=" << kv[1] << std::endl;
+        auto value = std::stoi(kv[0]);
+      }
     }
-
+  }
 }

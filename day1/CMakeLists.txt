@@ -1,3 +1,3 @@
 project(day1)
-file(SRC main.cpp)
+file(GLOB SRC main.cpp)
 add_executable(${PROJECT_NAME} ${SRC})
