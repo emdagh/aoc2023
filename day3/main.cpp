@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <unordered_map>
 
-const char* sym = "!@#$%^&*()_+-=";
+std::string sym = "!@#$%^&*()_+-=";
 
 enum {
     N, E, S, W,
@@ -14,7 +14,7 @@ enum {
     NUM_DIRECTIONS
 };
 
-struct coord { int x, int y; };
+struct coord { int x, y; };
 
 std::unordered_map<int, coord> coords = {
     { N, { 0, -1 } },
@@ -24,32 +24,56 @@ std::unordered_map<int, coord> coords = {
     { NE, { 1, 1 } },
     { SE, { 1,  0 } },
     { SW, { 0, -1 } },
-    { NW, { 1,  0 } },
+    { NW, { 1,  0 } }
 };
 
-int scan(int x, int y, size_t w, size_t h, const std::vector<std::string>& lines) {
-    bool checked[NUM_DIRECTIONS] = { false };
+int get_number(int x, int y, size_t w, size_t h, const char* data) {
+    
+}
 
+int scan(int x, int y, size_t w, size_t h, const char* data) {
+    bool checked[NUM_DIRECTIONS] = { false };
+    // check all directions for a number
     for(int i=0; i < NUM_DIRECTIONS; i++) {
-        
+        // mark direction as checked
+        checked[i]  = true;
+        int x2 = x + coords[i].x;
+        int y2 = y + coords[i].y;
+
+        if(x2 < 0 || x2 > w) continue;
+        if(y2 < 0 || y2 > h) continue;
+
+        if(std::isdigit(data[x2 + y2 * w])) {
+            get_number(x2, y2, w, h, data);
+        }
     }
 
-    // check all directions for a number
-    // mark direction as checked
     // if a number is touched, move to the beginning of that number 
     // find last consecutive digit
     // add to sum
 
 }
 
+void replace_all(std::string& src, const std::string& from, const std::string& to) {
+    size_t first = 0, found=0;
+    while((found = src.find_first_of(from, first)) != std::string::npos) {
+        src.replace(found, from.length(), to);
+        first = found + 1;
+    }
+}
+
 int main(int, char**)
 {
     std::fstream ifs("input2.txt");
+    if(!ifs.is_open()) {
+        return -1;
+    }
     size_t h = std::count(
         std::istreambuf_iterator<char>(ifs), 
         std::istreambuf_iterator<char>(), 
-        '\n');
-
+        '\n') + 1;
+    ifs.seekg(0);
+    
     std::string vec =  {};
     std::copy(
         std::istreambuf_iterator<char>(ifs),
@@ -60,18 +84,20 @@ int main(int, char**)
     auto lines = split(vec, "\n");
     size_t w = lines[0].length();
 
+    replace_all(vec, "\n", "");
+
     // x + y * w
 
-    for(size_t y=0; y < lines.size(); y++) {
-        const auto& line = lines[y];
-    //for(const auto& line: lines) {
+    //for(size_t y=0; y < lines.size(); y++) {
+        //const auto& line = lines[y];
         size_t first = 0, last = 0;
-        while((last = line.find_first_of(sym, first)) != std::string::npos) {
-            scan(last, y, w, h, lines);
+        while((last = vec.find_first_of(sym, first)) != std::string::npos) {
+            size_t y = last / w;
+            size_t x = last % w;
+            scan(x, y, w, h, vec.c_str());
             first = last + 1; // start after found symbol
         } 
-        while(std::find(line.begin(), line.end(), 
-    }
+    //}
 
 
     return 0;
