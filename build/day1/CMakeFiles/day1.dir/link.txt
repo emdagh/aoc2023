@@ -1,0 +1,1 @@
+/usr/bin/c++   -O0 -ggdb -g   CMakeFiles/day1.dir/main.cpp.o  -o day1 

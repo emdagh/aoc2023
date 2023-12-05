@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../common/string.hpp
+algorithm
+-
+iostream
+-
+iterator
+-
+numeric
+-
+sstream
+-
+string
+-
+vector
+-
+
+/mnt/c/Users/EDam/git/aoc2023/day2/main.cpp
+string.hpp
+/mnt/c/Users/EDam/git/aoc2023/day2/string.hpp
+fstream
+-
+iostream
+-
+regex
+-
+unordered_map
+-
+
